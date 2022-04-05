@@ -1,13 +1,17 @@
+let empPayrollList;
 window.addEventListener('DOMContentLoaded', (event) => {
+    empPayrollList = getEmployeePayrollDataFromStorage();
+    document.querySelector(".emp-count").textContent = empPayrollList.length;
     createInnerHtml();
 });
 
+const getEmployeePayrollDataFromStorage = () => {
+    return localStorage.getItem('EmployeePayrollList') ?
+                JSON.parse(localStorage.getItem('EmployeePayrollList')) : [];
+}
 const createInnerHtml = () => {
-    const headerHtml = "  <th></th><th>Name</th><th>Gender</th><th>Department</th><th>Salary</th><th>Start Date</th><th>Actions</th>";
-
-    
+    const headerHtml = "  <th></th><th>Name</th><th>Gender</th><th>Department</th><th>Salary</th><th>Start Date</th><th>Actions</th>";  
     let innerHtml = `${headerHtml}`;
-    let empPayrollList = createEmployeePayrollJSON();
     for (const empPayrollData of empPayrollList){
         innerHtml = `${innerHtml}
             <tr>
@@ -33,51 +37,7 @@ const createInnerHtml = () => {
     }
     document.querySelector('#table-display').innerHTML = innerHtml;
 }
-const createEmployeePayrollJSON = () => {
-    let empPayrollListLocal = [
-        {
-            _name: 'Arya Thorat',
-            _gender: 'Female',
-            _department: [
-                'HR', 
-                'Sales'
-            ],
-            _salary: '500000',
-            _startDate: '2 August 2022',
-            _note: '',
-            _id: new Date().getTime(),
-            _profilePic: '/assets/profile-images/Ellipse -1.png'
-        },
-        {
-            _name: 'Aman singh',
-            _gender: 'Male',
-            _department: [
-                'Engineer', 
-                'Finance'
-            ],
-            _salary: '400000',
-            _startDate: '1 Feb 2020',
-            _note: '',
-            _id: new Date().getTime(),
-            _profilePic: '/assets/profile-images/Ellipse -3.png'
-        },
-        {
-            _name: 'kartiki Gupta',
-            _gender: 'Female',
-            _department: [
-                'Engineer', 
-                'Finance'
-            ],
-            _salary: '100000',
-            _startDate: '5 Oct 2029',
-            _note: '',
-            _id: new Date().getTime(),
-            _profilePic: '/assets/profile-images/Ellipse -4.png'
-        }
-        
-    ];
-    return empPayrollListLocal; 
-}
+
 
 const getDeptHtml = (deptList) => {
     let deptHtml = '';
